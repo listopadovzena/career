@@ -25,56 +25,17 @@ toggleMenu.click(function(){
     }
 });
 
-function initMobile() {
-
-    $('body').addClass('is-mobile').removeClass('is-desktop');
-    console.log("is-mobile");
-}
-
-
-function initDesktop() {
-    $('body').addClass('is-desktop').removeClass('is-mobile');
-    toggleMenu.removeClass('active');
-    navMenu.removeAttr('style');
-    console.log("is-desktop");
- }
-
-
-
-
-
-ssm.addState({
-    id: 'tablet',
-    query: '(max-width: 768px)',
-    onEnter: function(){
-        initMobile();
-    }
-});
-
-ssm.addState({
-    id: 'desktop',
-    query: '(min-width: 768px)',
-    onEnter: function(){
-        initDesktop();
-    }
-});
-
 
 
 $("#slider").slick({
-
-
-        breakpoint: 1024,
-        settings: {
-            autoplay: true,
-            slidesToScroll:1,
-            slidesToShow:1,
-            arrows: true
-
-        }
-
-
+    autoplay: true,
+    slidesToScroll:1,
+    slidesToShow:1,
+    arrows: true
 });
+
+
+
 
 function initMap() {
     const cnt = {lat: 54.2107161, lng: 36.6157524};
@@ -82,24 +43,24 @@ function initMap() {
         center: cnt,
         zoom: 11
     });
+
     const marker = new google.maps.Marker({
         position: cnt,
-        map: map,
-        title: 'Home',
-        icon: true
-    });
+        map: map
 
+
+    });
     const infoWindow = new google.maps.InfoWindow({
-        content: 'Home'
+
+    });
+    marker.addListener('click', function () {
+        infoWindow.open(map, marker)
     });
 
-    marker.addListener('click', function(){
-        infoWindow.open(map,marker)
-    })
+
 }
 
 
-////////
 const home = document.getElementById('home');
 
 function getCoords(el) {
@@ -122,7 +83,7 @@ function handlerScroll(e){
         return false;
     }
     const el = document.getElementById(elScroll);
-  var coord = getCoords(el).top;
+    var coord = getCoords(el).top;
     if(home.classList.contains( 'top-fixed')) {
         coord -= home.offsetHeight;
     }
@@ -144,7 +105,7 @@ function handlerScroll(e){
 
 window.addEventListener('scroll', function(){
     const navHeight = home.offsetHeight;
-   var top = window.pageYOffset;
+    var top = window.pageYOffset;
     console.log(top - navHeight);
     if(top - navHeight > 20) {
         home.classList.add('top-fixed');
@@ -159,4 +120,3 @@ window.addEventListener('scroll', function(){
 
 
 document.addEventListener('click', handlerScroll, false);
-
